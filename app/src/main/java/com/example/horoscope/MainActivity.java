@@ -1,13 +1,28 @@
 package com.example.horoscope;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        ListView listSigns = getListView();
+        ArrayAdapter<Zodiac> listAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, Zodiac.signs);
+        listSigns.setAdapter(listAdapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView listView, View itemView, int position, long id) {
+        Intent intent = new Intent(MainActivity.this, ZodiacDetailActivity.class);
+        intent.putExtra(ZodiacDetailActivity.EXTRA_SIGN, (int) id);
+        startActivity(intent);
     }
 }
